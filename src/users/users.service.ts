@@ -30,7 +30,7 @@ export class UsersService {
   }
 
   findOneByName(username: string) {
-    return this.users.find(user => user.username === username);
+    return this.users.find((user) => user.username === username);
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
