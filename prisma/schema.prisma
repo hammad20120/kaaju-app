@@ -19,8 +19,8 @@ model User {
   name          String
   password_hash String
   avatar        String?
-  cnic          String?
+  cnic          String?   @unique
   birthdate     DateTime  @default(now())
-  phone         String?
+  phone         String?   @unique
   address       String?
 }
