@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -25,7 +25,7 @@ export class UsersService {
       const new_user = await this.prisma.user.create({ data: createUserDto });
       return new_user;
     } catch (error) {
-      throw new NotFoundException('Cannot create User.');
+      throw new BadRequestException('Cannot create User.');
     }
   }
 
