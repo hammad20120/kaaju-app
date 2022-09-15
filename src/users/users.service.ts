@@ -9,13 +9,13 @@ export class UsersService {
       userId: 1,
       username: 'john',
       password: 'changeme',
-      cni: '42201932409325809'
+      cni: '42201932409325809',
     },
     {
       userId: 2,
       username: 'maria',
       password: 'guess',
-      cnic: '42201932409325809'
+      cnic: '42201932409325809',
     },
   ];
 
