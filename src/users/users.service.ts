@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -17,16 +18,23 @@ export class UsersService {
     },
   ];
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(private prisma: PrismaService) {}
+
+  async create(createUserDto: CreateUserDto) {
+    try {
+      const new_user = await this.prisma.user.create({ data: createUserDto });
+      return new_user;
+    } catch (error) {
+      throw new BadRequestException('Cannot create User.');
+    }
   }
 
   findAll() {
-    return `This action returns all users`;
+    return this.prisma.user.findMany();
   }
 
   findOne(id: number) {
-    return this.users.find((user) => user.userId === id);
+    return this.prisma.user.findFirst({ where: { id: id } });
   }
 
   findOneByName(username: string) {
