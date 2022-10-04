@@ -23,4 +23,47 @@ model User {
   birthdate     DateTime  @default(now())
   phone         String?   @unique
   address       String?
+  ads           Ad[]
+  purchases     Purchase[]
+}
+
+model Ad{
+  id            Int       @id @default(autoincrement())
+  creator       User      @relation(fields: [creator_id], references: [id])
+  creator_id    Int
+  purchases     Purchase[]
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  deleted_at    DateTime?
+}
+
+model Purchase{
+  id            Int       @id @default(autoincrement())
+  buyer         User      @relation(fields: [buyer_id], references: [id])
+  buyer_id      Int
+  ad            Ad        @relation(fields: [ad_id],references: [id])
+  ad_id         Int
+  transactions  Transaction[]
+  review        Review?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  deleted_at    DateTime?
+}
+
+model Transaction{
+  id            Int       @id @default(autoincrement())
+  purchase      Purchase  @relation(fields: [purchase_id],references: [id])
+  purchase_id   Int
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  deleted_at    DateTime?  
+}
+
+model Review{
+  id            Int       @id @default(autoincrement())
+  purchase      Purchase  @relation(fields: [purchase_id],references: [id])
+  purchase_id   Int       @unique
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  deleted_at    DateTime?
 }
