@@ -27,6 +27,6 @@ export class AuthController {
 
   @Post('register-firbase')
   async registerFirebase(@Body() input) {
-    return this.authService.registerFirebase(input)
+    return this.authService.registerFirebase(input);
   }
 }

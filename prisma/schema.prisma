@@ -25,13 +25,16 @@ model User {
   address       String?
   ads           Ad[]
   purchases     Purchase[]
+  media         Media[]
 }
 
 model Ad{
   id            Int       @id @default(autoincrement())
+  name          String
   creator       User      @relation(fields: [creator_id], references: [id])
   creator_id    Int
   purchases     Purchase[]
+  media         Media[]
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
   deleted_at    DateTime?
@@ -45,6 +48,7 @@ model Purchase{
   ad_id         Int
   transactions  Transaction[]
   review        Review?
+  media         Media[]
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
   deleted_at    DateTime?
@@ -63,6 +67,24 @@ model Review{
   id            Int       @id @default(autoincrement())
   purchase      Purchase  @relation(fields: [purchase_id],references: [id])
   purchase_id   Int       @unique
+  media         Media[]
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  deleted_at    DateTime?
+}
+
+model Media{
+  id            Int       @id @default(autoincrement())
+  source        String
+  type          String
+  ad            Ad?       @relation(fields: [ad_id], references: [id])
+  ad_id         Int?
+  user          User?     @relation(fields: [user_id], references: [id])
+  user_id       Int?
+  purchase      Purchase? @relation(fields: [purchase_id], references: [id])
+  purchase_id   Int?
+  review        Review?   @relation(fields: [review_id], references: [id])
+  review_id     Int?
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
   deleted_at    DateTime?
